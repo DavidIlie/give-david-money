@@ -9,7 +9,9 @@ import { fetchGetJSON } from "@/lib/api-helpers";
 const ResultPage: NextPage = () => {
    const router = useRouter();
    const { data, error } = useSWR(
-      router.query.session_id ? `/api/stripe/${router.query.session_id}` : null,
+      router.query.session_id
+         ? `/api/stripe/check/${router.query.session_id}`
+         : null,
       fetchGetJSON
    );
 

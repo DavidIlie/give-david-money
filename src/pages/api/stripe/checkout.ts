@@ -29,7 +29,7 @@ const handler: NextApiHandler = async (req, res) => {
                },
             ],
             success_url: `${req.headers.origin}/result?session_id={CHECKOUT_SESSION_ID}`,
-            cancel_url: `${req.headers.origin}/donate-with-checkout`,
+            cancel_url: `${req.headers.origin}/`,
          };
          const checkoutSession: Stripe.Checkout.Session =
             await stripe.checkout.sessions.create(params);
@@ -45,3 +45,5 @@ const handler: NextApiHandler = async (req, res) => {
       res.status(405).end("Method Not Allowed");
    }
 };
+
+export default handler;
