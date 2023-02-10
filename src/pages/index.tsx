@@ -11,6 +11,7 @@ import * as config from "../lib/constants";
 const Home: NextPage = () => {
    const [loading, setLoading] = useState(false);
    const [input, setInput] = useState(15);
+   const [message, setMessaage] = useState("");
 
    const handleInputChange: React.ChangeEventHandler<HTMLInputElement> = (e) =>
       setInput(parseInt(e.currentTarget.value));
@@ -20,6 +21,7 @@ const Home: NextPage = () => {
       setLoading(true);
       const response = await fetchPostJSON("/api/stripe/checkout", {
          amount: input,
+         message: message,
       });
 
       if (response.statusCode === 500) {
@@ -44,10 +46,10 @@ const Home: NextPage = () => {
             />
          </Head>
          <LoadingOverlay visible={loading} />
-         <div className="flex justify-center items-center min-h-screen">
-            <div className="container max-w-3xl bg-gray-50 border border-gray-200 py-6 px-2 rounded-md">
+         <div className="flex items-center justify-center min-h-screen">
+            <div className="container max-w-3xl px-2 py-6 border border-gray-200 rounded-md bg-gray-50">
                <form onSubmit={handleSubmit}>
-                  <h1 className="font-medium text-xl mb-2 ml-1 text-gray-900">
+                  <h1 className="mb-2 ml-1 text-xl font-medium text-gray-900">
                      Give David Money
                   </h1>
                   <input
@@ -57,7 +59,13 @@ const Home: NextPage = () => {
                      max={config.MAX_AMOUNT}
                      step={config.AMOUNT_STEP}
                      onChange={handleInputChange}
-                     className="mb-2 w-full bg-gray-100 border border-gray-200 py-2 px-4 rounded-md"
+                     className={config.inputStyle}
+                  />
+                  <input
+                     value={message}
+                     onChange={(e) => setMessaage(e.target.value)}
+                     className={config.inputStyle}
+                     placeholder="Write message..."
                   />
                   <button
                      className={config.buttonStyle}

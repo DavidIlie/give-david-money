@@ -22,7 +22,7 @@ const handler: NextApiHandler = async (req, res) => {
             line_items: [
                {
                   //@ts-ignore
-                  name: "Give David Money",
+                  name: req.body.message || "Give David Money",
                   amount: formatAmountForStripe(amount, CURRENCY),
                   currency: CURRENCY,
                   quantity: 1,
